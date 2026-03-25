@@ -33,10 +33,10 @@ INSERT INTO Employee (name, airport_id, age, getting_started, position_id) VALUE
     ('Мария Иванова', 1, 29, '2018-09-15', (SELECT position_id FROM Employee_position WHERE name = 'dispatcher')),
     ('Пётр Сидоров', 2, 42, '2010-03-20', (SELECT position_id FROM Employee_position WHERE name = 'mechanic'));
 
-INSERT INTO Plane (coordinates, altitude, width, plane_length, height, plane_state) VALUES
-    (ROW(55.972642, 37.414589)::coord, 0, 4, 40, 12, 'ready for take off'),
-    (ROW(55.408786, 37.906314)::coord, 10000, 5, 45, 13, 'in flight'),
-    (ROW(59.800292, 30.262503)::coord, 500, 3, 30, 10, 'under mechanic inspection');
+INSERT INTO Plane (coordinates, altitude, width, plane_length, height, plane_state, base_airport_id) VALUES
+    (ROW(55.972642, 37.414589)::coord, 0, 4, 40, 12, 'ready for take off', 1),
+    (ROW(55.408786, 37.906314)::coord, 10000, 5, 45, 13, 'in flight', 2),
+    (ROW(59.800292, 30.262503)::coord, 500, 3, 30, 10, 'under mechanic inspection', 3);
 
 INSERT INTO Status_log (plane_id, employee_id, change_time, status) VALUES
     (1, 1, now(), 'ready for take off'),

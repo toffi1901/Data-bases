@@ -142,10 +142,10 @@ class DataBaseFiller:
             plane_length = random.randint(7, 85)
             height = random.randint(2, 20)
             plane_state = random.choice(self.plane_statuses)
-            self.cursor.execute(
-                "INSERT INTO Plane (coordinates, altitude, width, plane_length, height, plane_state) "
-                "VALUES (ROW(%s,%s)::coord, %s, %s, %s, %s, %s) RETURNING plane_id",
-                (lat, lon, altitude, width, plane_length, height, plane_state)
+            base_airport_id = random.choice(self.airport_ids) if self.airport_ids else None
+            self.cursor.execute("""INSERT INTO Plane (coordinates, altitude, width, plane_length, height, plane_state, base_airport_id)
+                VALUES (ROW(%s, %s)::coord, %s, %s, %s, %s, %s, %s) plane_id""",
+                (lat, lon, altitude, width, plane_length, height, plane_state, base_airport_id)
             )
             plane_id = self.cursor.fetchone()[0]
             self.plane_ids.append(plane_id)

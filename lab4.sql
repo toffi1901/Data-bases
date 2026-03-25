@@ -169,3 +169,15 @@ CREATE TABLE Strip_log (
     destination_time timestamptz,
     let_go_time timestamptz
 );
+
+
+ALTER TABLE Plane ADD COLUMN base_airport_id bigint REFERENCES Airport(airport_id);
+
+UPDATE Plane p
+SET base_airport_id = (
+    SELECT airport_id
+    FROM Airport a
+    ORDER BY (p.coordinates.latitude - a.coordinates.latitude)^2 +
+             (p.coordinates.longitude - a.coordinates.longitude)^2
+    LIMIT 1
+);
